@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/register/register",
+    "pages/index/index",
+    "pages/home/home",
+    "pages/user/user",
+    "pages/user/profile",
+    "pages/target/target",
+    "pages/target/history",
+    "pages/ai/ai",
+    "pages/match/match",
+    "pages/volunteer/home"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {}
+}

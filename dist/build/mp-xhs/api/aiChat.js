@@ -1,0 +1,1 @@
+"use strict";const e=require("../utils/request.js"),i=(s="新对话")=>e.api.post("/api/ai/chat/sessions",{title:s}),t=(s,a)=>e.api.post("/api/ai/chat/messages",{sessionId:s,message:a}),o=s=>e.api.post("/api/ai/chat/user-info",s);exports.createSession=i;exports.saveUserInfo=o;exports.sendMessage=t;

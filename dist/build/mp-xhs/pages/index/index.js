@@ -1,0 +1,1 @@
+"use strict";const e=require("../../common/vendor.js"),o=require("../../common/assets.js"),r={data(){return{title:"Hello"}},onLoad(){},methods:{}};function s(c,_,a,i,t,m){return{a:o._imports_0,b:e.t(t.title)}}const n=e._export_sfc(r,[["render",s]]);xhs.createPage(n);

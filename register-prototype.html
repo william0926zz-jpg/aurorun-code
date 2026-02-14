@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>移动端注册原型</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #0b1222;
+      --card: #121a2e;
+      --accent: #4f8bff;
+      --accent-2: #74f0ed;
+      --text: #e8ecf5;
+      --muted: #8ea0c2;
+      --border: #1f2a44;
+      --success: #4ade80;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(120% 120% at 10% 20%, rgba(79,139,255,0.12), transparent),
+                  radial-gradient(120% 120% at 80% 0%, rgba(116,240,237,0.12), transparent),
+                  var(--bg);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      padding: 24px;
+    }
+    .canvas {
+      width: min(460px, 100%);
+      background: rgba(12, 18, 34, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .canvas::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(79,139,255,0.12), rgba(116,240,237,0.08));
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .device {
+      position: relative;
+      width: 390px;
+      max-width: 100%;
+      aspect-ratio: 9 / 19.5;
+      border-radius: 28px;
+      padding: 12px;
+      background: linear-gradient(145deg, #111b2e, #0a0f1e);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+      z-index: 1;
+    }
+    .device::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+    .screen {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #0c1426 0%, #0b1020 100%);
+      border-radius: 20px;
+      padding: 20px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    .status {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    .pill {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(79, 139, 255, 0.12);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 12px rgba(79, 139, 255, 0.8);
+    }
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 6px 0 18px;
+    }
+    .hero .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #1b2640, #152037);
+      display: grid;
+      place-items: center;
+      color: #9cc5ff;
+      font-weight: 700;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+    .hero h1 { margin: 0; font-size: 22px; }
+    .hero p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    }
+    label { display: block; color: var(--muted); font-size: 13px; margin-bottom: 6px; }
+    .input {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      gap: 10px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .input:focus-within { border-color: rgba(79,139,255,0.7); background: rgba(79,139,255,0.05); }
+    .input input { flex: 1; border: none; outline: none; background: transparent; color: var(--text); font-size: 15px; }
+    .input button.eye {
+      border: none;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .input button.eye:hover { color: var(--text); background: rgba(79,139,255,0.14); }
+    .actions { display: grid; gap: 10px; margin-top: 14px; }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s;
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #0c1220;
+      box-shadow: 0 12px 30px rgba(79,139,255,0.35);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    .btn.primary.ready { opacity: 1; pointer-events: auto; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); box-shadow: none; }
+    .footnote { text-align: center; color: var(--muted); font-size: 12px; margin-top: 8px; }
+    .footer-link { text-align: center; color: var(--muted); font-size: 13px; margin-top: 10px; }
+    @media (max-width: 560px) { body { padding: 12px; } .canvas { padding: 12px; border-radius: 18px; } }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="device">
+      <div class="screen">
+        <div class="status">
+          <span>09:41</span>
+          <span>LTE · 80%</span>
+        </div>
+        <div class="pill">注册 · 安全态</div>
+        <div class="hero">
+          <div class="icon">UX</div>
+          <div>
+            <h1>创建账号</h1>
+            <p>请输入账号和密码完成注册</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="margin-bottom: 12px;">
+            <label for="account">账号</label>
+            <div class="input">
+              <span style="color: var(--muted); font-weight: 600;">@</span>
+              <input id="account" type="text" placeholder="输入邮箱或手机号" autocomplete="username" />
+            </div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <label for="password">密码</label>
+            <div class="input">
+              <span style="color: var(--muted); font-weight: 600;">••</span>
+              <input id="password" type="password" placeholder="至少 8 位，含数字" autocomplete="new-password" />
+              <button class="eye" id="togglePwd" type="button">显示</button>
+            </div>
+          </div>
+
+          <div>
+            <label for="confirmPwd">确认密码</label>
+            <div class="input">
+              <span style="color: var(--muted); font-weight: 600;">••</span>
+              <input id="confirmPwd" type="password" placeholder="再次输入密码" autocomplete="new-password" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" id="registerBtn">注册</button>
+          </div>
+        </div>
+        <div class="footnote">提示：填写账号与密码后，按钮自动激活</div>
+        <div class="footer-link">已有账号？<a href="login-prototype.html" style="color: var(--accent); text-decoration: none;">去登录</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const account = document.getElementById("account");
+    const password = document.getElementById("password");
+    const confirmPwd = document.getElementById("confirmPwd");
+    const registerBtn = document.getElementById("registerBtn");
+    const togglePwd = document.getElementById("togglePwd");
+
+    const syncState = () => {
+      const ready = account.value.trim().length > 0 &&
+                    password.value.trim().length >= 6 &&
+                    confirmPwd.value === password.value;
+      registerBtn.classList.toggle("ready", ready);
+      registerBtn.textContent = ready ? "注册" : "请完善信息";
+    };
+
+    account.addEventListener("input", syncState);
+    password.addEventListener("input", syncState);
+    confirmPwd.addEventListener("input", syncState);
+
+    togglePwd.addEventListener("click", () => {
+      const isText = password.type === "text";
+      password.type = isText ? "password" : "text";
+      togglePwd.textContent = isText ? "显示" : "隐藏";
+    });
+
+    registerBtn.addEventListener("click", () => {
+      if (!registerBtn.classList.contains("ready")) return;
+      registerBtn.textContent = "验证中...";
+      registerBtn.style.boxShadow = "0 10px 26px rgba(74, 222, 128, 0.35)";
+      setTimeout(() => {
+        registerBtn.textContent = "注册成功 ✓";
+        registerBtn.style.background = "linear-gradient(135deg, #4ade80, #b5f5ec)";
+        setTimeout(() => { window.location.href = "login-prototype.html"; }, 800);
+      }, 600);
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

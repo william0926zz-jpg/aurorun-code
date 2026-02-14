@@ -1,0 +1,108 @@
+{
+	"pages": [ 
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#0d1629",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#0d1629",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#0b1222",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/user",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/profile",
+			"style": {
+				"navigationBarTitleText": "用户信息录入",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#1a2744",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/target/target",
+			"style": {
+				"navigationBarTitleText": "目标",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#1a2744",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/target/history",
+			"style": {
+				"navigationBarTitleText": "历史记录",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#1a2744",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/ai/ai",
+			"style": {
+				"navigationBarTitleText": "AI聊天",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#1a2744",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/match/match",
+			"style": {
+				"navigationBarTitleText": "匹配",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#1a2744",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/volunteer/home",
+			"style": {
+				"navigationBarTitleText": "志愿者主页",
+				"navigationBarTextStyle": "white",
+				"navigationBarBackgroundColor": "#0b1222",
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"optimization": {
+		"subPackages": true
+	},
+	"lazyCodeLoading": "requiredComponents"
+}

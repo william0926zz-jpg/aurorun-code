@@ -1,0 +1,1 @@
+"use strict";const r=require("../utils/request.js"),e=(t,i,o="blind")=>r.api.post("/api/auth/register",{account:t,password:i,role:o}),s=(t,i,o=!1)=>r.api.post("/api/auth/login",{account:t,password:i,remember:o}),u=()=>r.api.post("/api/auth/logout");exports.login=s;exports.logout=u;exports.register=e;

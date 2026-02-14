@@ -1,0 +1,48 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.uniCloudPlugin = void 0;
+const path_1 = __importDefault(require("path"));
+const uni_cli_shared_1 = require("@dcloudio/uni-cli-shared");
+const utils_1 = require("./utils");
+const uniCloudSpaceList = (0, utils_1.getUniCloudSpaceList)();
+function uniCloudPlugin() {
+    if (!(process.env.UNI_COMPILE_TARGET === 'ext-api' &&
+        process.env.UNI_APP_NEXT_WORKSPACE)) {
+        (0, uni_cli_shared_1.addUTSEasyComAutoImports)((0, uni_cli_shared_1.normalizePath)(path_1.default.resolve((0, uni_cli_shared_1.resolveComponentsLibPath)(), 'unicloud-db', 'index.uts')), ['mixinDatacom', 'uniCloudMixinDatacom']);
+    }
+    return {
+        name: 'uni:app-unicloud',
+        apply: 'build',
+        generateBundle(_, bundle) {
+            if (uniCloudSpaceList.length === 0) {
+                return;
+            }
+            if (bundle[(0, utils_1.ENTRY_FILENAME)()]) {
+                const inputDir = process.env.UNI_INPUT_DIR;
+                const platform = process.env.UNI_UTS_PLATFORM;
+                const isSecureNetworkEnabled = (0, uni_cli_shared_1.isEnableSecureNetwork)(inputDir, platform);
+                const asset = bundle[(0, utils_1.ENTRY_FILENAME)()];
+                asset.source =
+                    asset.source +
+                        `
+export class UniCloudConfig extends io.dcloud.unicloud.InternalUniCloudConfig {
+    override isDev : boolean = ${process.env.NODE_ENV === 'development' ? 'true' : 'false'}
+    override spaceList : string = ${JSON.stringify(JSON.stringify(uniCloudSpaceList.map((item) => {
+                            const itemCopy = { ...item };
+                            delete itemCopy.workspaceFolder;
+                            return itemCopy;
+                        })))}
+    override debuggerInfo ?: string = ${JSON.stringify(process.env.UNICLOUD_DEBUG || null)}
+    override secureNetworkEnable : boolean = ${JSON.stringify(isSecureNetworkEnabled || false)}
+    override secureNetworkConfig ?: string = ${JSON.stringify(process.env.UNI_SECURE_NETWORK_CONFIG || '[]')}
+    constructor() { super() }
+}
+`;
+            }
+        },
+    };
+}
+exports.uniCloudPlugin = uniCloudPlugin;

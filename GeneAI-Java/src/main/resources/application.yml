@@ -1,0 +1,19 @@
+server:
+  port: 3000
+
+spring:
+  application:
+    name: geneai-java
+
+# OpenAI配置
+openai:
+  api:
+    key: ${OPENAI_API_KEY:}  # 从环境变量读取，或直接在配置文件中设置
+    base-url: https://api.chatanywhere.tech
+
+# 日志配置
+logging:
+  level:
+    com.aurorun.geneai: INFO
+    root: INFO
+
